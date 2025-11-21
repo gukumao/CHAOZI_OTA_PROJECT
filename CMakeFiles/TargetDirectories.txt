@@ -1,0 +1,6 @@
+/home/yuan/桌面/OTA/CMakeFiles/OTA.dir
+/home/yuan/桌面/OTA/CMakeFiles/edit_cache.dir
+/home/yuan/桌面/OTA/CMakeFiles/rebuild_cache.dir
+/home/yuan/桌面/OTA/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir
+/home/yuan/桌面/OTA/cmake/stm32cubemx/CMakeFiles/edit_cache.dir
+/home/yuan/桌面/OTA/cmake/stm32cubemx/CMakeFiles/rebuild_cache.dir

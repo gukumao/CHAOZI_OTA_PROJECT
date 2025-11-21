@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug OTA with OpenOCD (ST-Link)",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/Debug/OTA.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "device": "STM32F103RCTx", // 请根据你的具体MCU型号修改，例如 STM32F103C8Tx, STM32F103RCTx
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32f1x.cfg"
+            ],
+            "serverpath": "/usr/local/bin/openocd", // 修正为 serverpath
+            //"svdFile": "${workspaceFolder}/STM32F103.svd", // 如果有，请修改为你的SVD文件路径，例如 STM32F103.svd
+            "runToEntryPoint": "main",
+            "showDevDebugOutput": "none",
+            "searchDir": [
+                "/usr/local/share/openocd/scripts" // OpenOCD脚本文件的搜索路径
+            ],
+            "postLaunchCommands": [
+                "monitor reset halt",
+                "load",
+                "monitor arm semihosting enable" // 如果你的程序使用了半主机模式，可以开启
+            ]
+        }
+    ]
+}
