@@ -28,15 +28,31 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f1xx_hal.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "string.h"
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+#define F103RC_FALSH_SADDR 0X08000000 // flash起始地址
+#define F103RC_PAGE_SIZE 2048 // 扇区大小
+#define F103RC_PAGE_NUM 128 // 扇区个数
+#define F103RC_B_PAGE_NUM 10  // B区扇区个数
+#define F103RC_A_PAGE_NUM (F103RC_PAGE_NUM - F103RC_B_PAGE_NUM) // A区扇区个数
+#define F103RC_A_SPAGE F103RC_B_PAGE_NUM  // A区起始扇区标号
+#define F103RC_A_SADDR (F103RC_FALSH_SADDR + F103RC_A_SPAGE * F103RC_PAGE_SIZE) // A区flash起始地址
 
+#define OTA_SET_FLAG 0XAABB1122
+typedef struct 
+{
+    uint32_t ota_flag;
+}OTA_InfoCB;
+
+#define OTA_INFOCB_SIZE sizeof(OTA_InfoCB)
+
+extern OTA_InfoCB OTA_Info;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/

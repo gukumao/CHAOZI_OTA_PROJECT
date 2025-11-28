@@ -1,30 +1,57 @@
 {
+    // VS Code调试配置文件的版本，通常为"0.2.0"
     "version": "0.2.0",
+    // 包含一个或多个调试配置的数组
     "configurations": [
         {
+            // 配置名称，显示在VS Code调试下拉菜单中
             "name": "Debug OTA with OpenOCD (ST-Link)",
+            // 工作目录，${workspaceFolder}表示当前项目根目录
+            "cwd": "${workspaceFolder}",
+            // 要调试的可执行文件路径，CMake构建后通常在build/Debug/下
+            "executable": "${workspaceFolder}/build/Debug/OTA.elf",
+            // 请求类型，"launch"表示启动调试会话
+            "request": "launch",
+            // 调试器类型，对于Cortex-M系列MCU使用"cortex-debug"扩展
+            "type": "cortex-debug",
+            // 调试服务器类型，这里使用OpenOCD
+            "servertype": "openocd",
+            // 目标MCU型号，根据您的实际芯片型号进行修改
+            "device": "STM32F103RCTx",
+            // OpenOCD配置文件，用于指定调试接口和目标芯片
+            "configFiles": [
+                "interface/stlink.cfg", // ST-Link调试器的接口配置
+                "target/stm32f1x.cfg" // STM32F1系列芯片的目标配置
+            ],
+            // OpenOCD可执行文件的路径
+            "serverpath": "/usr/local/bin/openocd",
+            // SVD文件路径，用于提供寄存器和外设视图，如果需要可以取消注释并修改
+            //"svdFile": "${workspaceFolder}/STM32F103.svd",
+            // 调试启动后运行到指定入口函数，通常是"main"
+            "runToEntryPoint": "main",
+            // 控制调试输出的详细程度
+            "showDevDebugOutput": "none",
+            // OpenOCD脚本文件的搜索路径
+            "searchDir": [
+                "/usr/local/share/openocd/scripts"
+            ],
+            // 调试会话启动后执行的OpenOCD命令
+            "postLaunchCommands": [
+                "monitor reset halt", // 复位并暂停CPU
+                "load",               // 加载程序到目标芯片
+                "monitor arm semihosting enable" // 如果程序使用半主机模式，启用该功能
+            ]
+        },
+        {
+            "name": "Attach to pyOCD GDB Server",
             "cwd": "${workspaceFolder}",
             "executable": "${workspaceFolder}/build/Debug/OTA.elf",
-            "request": "launch",
+            "request": "attach", // <-- 这里是 "attach"
             "type": "cortex-debug",
-            "servertype": "openocd",
-            "device": "STM32F103RCTx", // 请根据你的具体MCU型号修改，例如 STM32F103C8Tx, STM32F103RCTx
-            "configFiles": [
-                "interface/stlink.cfg",
-                "target/stm32f1x.cfg"
-            ],
-            "serverpath": "/usr/local/bin/openocd", // 修正为 serverpath
-            //"svdFile": "${workspaceFolder}/STM32F103.svd", // 如果有，请修改为你的SVD文件路径，例如 STM32F103.svd
+            "servertype": "external", // <-- 使用外部GDB服务器
+            "gdbTarget": "localhost:3333", // <-- pyOCD GDB服务器监听的地址和端口
             "runToEntryPoint": "main",
-            "showDevDebugOutput": "none",
-            "searchDir": [
-                "/usr/local/share/openocd/scripts" // OpenOCD脚本文件的搜索路径
-            ],
-            "postLaunchCommands": [
-                "monitor reset halt",
-                "load",
-                "monitor arm semihosting enable" // 如果你的程序使用了半主机模式，可以开启
-            ]
+            "showDevDebugOutput": "none"
         }
     ]
 }

@@ -39,6 +39,12 @@ add_subdirectory(cmake/stm32cubemx)
 
 # BSP
 add_subdirectory(Drivers/BSP/OTA_UART)
+add_subdirectory(Drivers/BSP/IIC)
+add_subdirectory(Drivers/BSP/24CXX)
+add_subdirectory(Drivers/BSP/NORFLASH)
+add_subdirectory(Drivers/BSP/SPI)
+add_subdirectory(Drivers/BSP/STMFLASH)
+add_subdirectory(Drivers/BSP/bootloader)
 
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
@@ -47,6 +53,7 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
+    ${CMAKE_SOURCE_DIR}/Core/Src/delay.c
     # Add user sources here
 )
 
@@ -66,8 +73,13 @@ list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
 # Add linked libraries
 target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
-    ota_uart
-
+    OTA_UART
+    MY_IIC
+    24CXX
+    NORFLASH
+    MY_SPI
+    STMFLASH
+    BOOTLOADER
     # Add user defined libraries
 )
 

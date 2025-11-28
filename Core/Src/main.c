@@ -22,7 +22,13 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
+#include "ota_uart.h"
+#include "delay.h"
+#include "myiic.h"
+#include "24cxx.h"
+#include "stmflash.h"
+#include "bootloader.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,7 +49,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+OTA_InfoCB OTA_Info;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -86,14 +92,29 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-
+  ota_uart_init(921600);
+  ota_uart_cb_init();
+  iic_init();
+  at24cxx_read_otaflag();
+  bootloader_brance();
   /* USER CODE END 2 */
   
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    
+    // if (ota_uart_cb.URxDataOUT != ota_uart_cb.URxDataIN) {
+    //   printf("本次接收的字节数为%d\r\n", (ota_uart_cb.URxDataOUT->end - ota_uart_cb.URxDataOUT->start) + 1);
+    //   for (int i = 0; i < ((ota_uart_cb.URxDataOUT->end - ota_uart_cb.URxDataOUT->start) + 1); i++) {
+    //     printf("%d", ota_uart_cb.URxDataOUT->start[i]);
+    //   }
+
+    //   ota_uart_cb.URxDataOUT++;
+    //   if (ota_uart_cb.URxDataOUT == ota_uart_cb.URxDataIN) {
+    //     ota_uart_cb.URxDataOUT = &ota_uart_cb.URxDataPtr[0];
+    //   }
+    // }
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
