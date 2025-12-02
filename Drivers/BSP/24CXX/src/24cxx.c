@@ -185,6 +185,13 @@ void at24cxx_read_otaflag(void)
     at24cxx_read(0, (uint8_t *)&OTA_Info, OTA_INFOCB_SIZE);
 }
 
+void at24cxx_write_otainfo(void)
+{
+    uint8_t *wptr;
+    
+    wptr = (uint8_t *)&OTA_Info;
+    at24cxx_write(0, wptr, OTA_INFOCB_SIZE);
+}
 
 
 

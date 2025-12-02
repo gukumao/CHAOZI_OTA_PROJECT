@@ -50,6 +50,7 @@
 
 /* USER CODE BEGIN PV */
 OTA_InfoCB OTA_Info;
+updata_cb updataA;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -92,6 +93,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
+  delay_init(72);
   ota_uart_init(921600);
   ota_uart_cb_init();
   iic_init();
@@ -104,13 +106,13 @@ int main(void)
   while (1)
   {
     // if (ota_uart_cb.URxDataOUT != ota_uart_cb.URxDataIN) {
-    //   printf("本次接收的字节数为%d\r\n", (ota_uart_cb.URxDataOUT->end - ota_uart_cb.URxDataOUT->start) + 1);
-    //   for (int i = 0; i < ((ota_uart_cb.URxDataOUT->end - ota_uart_cb.URxDataOUT->start) + 1); i++) {
-    //     printf("%d", ota_uart_cb.URxDataOUT->start[i]);
+    //   printf("本次接收的字节数为%d\r\n", ota_uart_cb.URxDataOUT->end - ota_uart_cb.URxDataOUT->start + 1);
+    //   for (int i = 0; i < (ota_uart_cb.URxDataOUT->end - ota_uart_cb.URxDataOUT->start + 1); i++) {
+    //     printf("%c", ota_uart_cb.URxDataOUT->start[i]);
     //   }
-
+    //   printf("\r\n");
     //   ota_uart_cb.URxDataOUT++;
-    //   if (ota_uart_cb.URxDataOUT == ota_uart_cb.URxDataIN) {
+    //   if (ota_uart_cb.URxDataOUT == ota_uart_cb.URxDataEND) {
     //     ota_uart_cb.URxDataOUT = &ota_uart_cb.URxDataPtr[0];
     //   }
     // }

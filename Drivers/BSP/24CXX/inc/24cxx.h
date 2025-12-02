@@ -47,6 +47,7 @@ void at24cxx_write_one_byte(uint16_t addr,uint8_t data);            /* Ö¸¶¨µØÖ·Ğ
 void at24cxx_write(uint16_t addr, uint8_t *pbuf, uint16_t datalen); /* ´ÓÖ¸¶¨µØÖ·¿ªÊ¼Ğ´ÈëÖ¸¶¨³¤¶ÈµÄÊı¾İ */
 void at24cxx_read(uint16_t addr, uint8_t *pbuf, uint16_t datalen);  /* ´ÓÖ¸¶¨µØÖ·¿ªÊ¼¶Á³öÖ¸¶¨³¤¶ÈµÄÊı¾İ */
 void at24cxx_read_otaflag(void);
+void at24cxx_write_otainfo(void);
 #endif
 
 

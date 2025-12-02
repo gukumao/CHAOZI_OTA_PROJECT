@@ -112,6 +112,8 @@ void OTA_UART_IRQHandler(void)
         // 1. 清除空闲中断标志位 (先读SR再读DR，HAL库宏封装了)
         __HAL_UART_CLEAR_IDLEFLAG(&g_ota_uart_handle);
         
+        HAL_UART_DMAStop(&g_ota_uart_handle);
+
         // 2. 计算当前接收到的数据位置
         // 公式：当前偏移量 += (设定的DMA总长 - DMA剩余长度)
         ota_uart_cb.URxcounter += (OTA_RX_MAX + 1) - __HAL_DMA_GET_COUNTER(&g_ota_uart_dma_handle);
@@ -139,6 +141,7 @@ void OTA_UART_IRQHandler(void)
             ota_uart_cb.URxDataIN->start = ota_rxbuff;
             ota_uart_cb.URxcounter = 0;
         }
+
 
         // 7. 重新开启 DMA 接收
         HAL_UART_Receive_DMA(&g_ota_uart_handle, ota_uart_cb.URxDataIN->start,  OTA_RX_MAX + 1); 

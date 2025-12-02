@@ -48,11 +48,20 @@ extern "C" {
 typedef struct 
 {
     uint32_t ota_flag;
+    uint32_t firlen[11];
 }OTA_InfoCB;
+
+typedef struct 
+{
+    uint8_t updatabuff[F103RC_PAGE_SIZE];
+    uint32_t w25q64_block_num;
+}updata_cb;
 
 #define OTA_INFOCB_SIZE sizeof(OTA_InfoCB)
 
 extern OTA_InfoCB OTA_Info;
+extern updata_cb updataA;
+
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
